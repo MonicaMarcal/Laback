@@ -8,4 +8,7 @@ export class Transaction {
   ) {
     
   }
+  getValue = () => this.value
+  getDescription = () => this.description
+  getDate = () => this.date
 }

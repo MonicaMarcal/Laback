@@ -10,4 +10,9 @@ export class Account {
   ) {
     
   }
+  getName = () => this.name
+  getCpf = () => this.cpf
+  getBirthDate = () => this.birthDate
+  getBalance = () => this.balance
+  getTransactions = () => this.transactions
 }
