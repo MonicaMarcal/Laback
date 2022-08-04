@@ -3,7 +3,7 @@
     "name": "monica",
     "cpf": "12345678912",
     "birthDate": "31/12/1993",
-    "balance": 950,
+    "balance": 750,
     "transactions": [
       {
         "value": 1000,
@@ -26,7 +26,7 @@
     "name": "Joao",
     "cpf": "78945612312",
     "birthDate": "07/07/1995",
-    "balance": 0,
+    "balance": 200,
     "transactions": [
       {
         "value": 200,
