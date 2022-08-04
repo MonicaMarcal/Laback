@@ -21,6 +21,7 @@ export class Account {
     this.transactions.push(transaction)
   }
   calculateBalance():void{
+    this.balance = 0
     this.transactions.forEach(
       (transaction) =>{
         const today: moment.Moment = moment() //data de hoje

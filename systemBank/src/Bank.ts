@@ -128,6 +128,42 @@ export class Bank{
         )
         this.fileManager.writeToDatabase(this.accounts)
       }
-      makeTransfer(depositaryName, depositaryCpf, recipientName, recipientCpf, value)
+      makeTransfer(
+        depositaryName:string,
+        depositaryCpf:string, 
+        recipientName:string, 
+        recipientCpf:string, 
+        value:number
+        ):void{
+          const depositaryAccount: Account | undefined = this.accounts.find(
+            (account) => {return account.getCpf() === depositaryCpf && account.getName() === depositaryName}
+          )
+          const recipientAccount: Account | undefined = this.accounts.find(
+            (account) => {return account.getCpf() === recipientCpf && account.getName() === recipientName}
+          )
+          //caso um dos dois não exista
+          if(!depositaryAccount || !recipientAccount){
+            throw new Error("Contas não encontradas")
+          }
+          //caso as duas existam
+          this.accounts.forEach(
+            account => {
+              if(account.getCpf() === depositaryCpf && account.getName() === depositaryName){
+                  account.addTransaction(new Transaction( //esse if é a conta da onde está saindo o dinheiro
+                    value * -1,
+                    "Transferencia entre contas"
+                  ))
+              }
+              if(account.getCpf() === recipientCpf && account.getName() === recipientName){
+                account.addTransaction(new Transaction( //esse if é a conta da onde está saindo o dinheiro
+                    value,
+                    "Transferencia entre contas"
+                  ))
+              }
+            }
+          )
+          this.fileManager.writeToDatabase(this.accounts)
+
+        }
   }
   

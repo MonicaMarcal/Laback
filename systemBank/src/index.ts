@@ -46,6 +46,15 @@ const action: string = process.argv[2] //segunda posição do meu array de argum
     bank.updateBalance()
     break
 
+  case 'makeTransfer':
+  bank.makeTransfer(
+    process.argv[3],//repositaryName
+    process.argv[4],//repositaryCpf
+    process.argv[5], //recipientName
+    process.argv[6], //recipientCpf
+    Number(process.argv[7])//value
+  )
+    break
     default:
       console.log("Operação invalida!")
       break;
