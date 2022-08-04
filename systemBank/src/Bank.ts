@@ -12,17 +12,24 @@ export class Bank{
     const fileData: any = this.fileManager.readDatabase() //o que tinha no meu JSON está salvo nessa fileData
     this.accounts = fileData.map(
       (item : any) => {
+        const transactions = item.transactions.map(
+          (transaction: any) => new Transaction (
+            transaction.value,
+            transaction.description,
+            transaction.date
+          )
+        )
         return new Account(
           item.name,
           item.cpf,
           item.birthDate,
           item.balance,
-          item.transactions 
+          transactions 
         )
       }
     )
   }
-  createAccount(name: string, cpf: string, birthDate: string): void{//função que recebe os parametros nome, cpf e a data de nascimento
+      createAccount(name: string, cpf: string, birthDate: string): void{//função que recebe os parametros nome, cpf e a data de nascimento
     const duplicateAccount: Account | undefined = this.accounts.find( 
       (account) => {return account.getCpf() === cpf}  //VALIDANDO CPF:procurando pela conta onde o cpf seja igual ao cpf que estou recebendo
       )
@@ -75,5 +82,52 @@ export class Bank{
         )
         this.fileManager.writeToDatabase(this.accounts) //salvando no banco de dados json
       }
-    }
+      //pagando conta
+      payBill(
+         cpf: string,
+         value: number, 
+         description: string,
+         date: string = moment().format("DD/MM/YYYY")
+         ): void{
+         value = Number(value)/////
+         this.accounts.forEach( 
+          (account) => {
+            const dateAsObject = moment(date, "DD/MM/YYYY")
+            if(
+              account.getCpf() === cpf &&
+              value < account.getBalance() &&
+              dateAsObject.diff(moment() , 'days') >= 0 //timestamp do momento que o codigo esta sendo executado
+            ){
+              account.addTransaction(//criando uma nova transaction
+                new Transaction (
+                (value * -1),//tem que ser negativo porque estou tirando dinheiro da conta
+                description,
+                date
+                )
+              )
+              this.fileManager.writeToDatabase(this.accounts) //salvando no banco de dados json
+              console.log("Sucesso")
+            }else{
+             console.log(
+              account.getCpf() === cpf,
+              value < account.getBalance(),
+              dateAsObject.diff(moment() , 'days') >= 0 ///
+             )
+            }
+          }  
+        )
+      }
+      //Essa função não recebe nada, o que ela precisa fazer é passar
+      //por todas as contas e para cada conta ela vai passar pelo array de transações
+      //e para cada transação ela vai atualizar o saldo
+      updateBalance(){
+        this.accounts.forEach(
+          (account) =>{
+            account.calculateBalance()
+          }
+        )
+        this.fileManager.writeToDatabase(this.accounts)
+      }
+      makeTransfer(depositaryName, depositaryCpf, recipientName, recipientCpf, value)
+  }
   

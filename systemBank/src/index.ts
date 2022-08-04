@@ -14,6 +14,7 @@ const action: string = process.argv[2] //segunda posição do meu array de argum
     )
     console.log("Sucesso")
     break;
+
   case 'getBalance':
       console.log(
         bank.getBalance(
@@ -22,6 +23,7 @@ const action: string = process.argv[2] //segunda posição do meu array de argum
         )
       )
       break
+
   case 'addBalance':
     bank.addBalance(
       process.argv[3],
@@ -29,6 +31,19 @@ const action: string = process.argv[2] //segunda posição do meu array de argum
       Number(process.argv[5])
     )
     console.log("Sucesso")
+    break
+
+  case 'payBill':
+    bank.payBill(
+      process.argv[3],//cpf
+      Number(process.argv[4]),//value
+      process.argv[5], //description
+      process.argv[6] //date
+    )
+    break
+
+  case 'updateBalance':
+    bank.updateBalance()
     break
 
     default:

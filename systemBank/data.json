@@ -3,12 +3,17 @@
     "name": "monica",
     "cpf": "12345678912",
     "birthDate": "31/12/1993",
-    "balance": 0,
+    "balance": 1000,
     "transactions": [
       {
         "value": 1000,
         "description": "Deposito de dinheiro",
         "date": "03/08/2022"
+      },
+      {
+        "value": -50,
+        "description": "mcdonald",
+        "date": "04/08/2022"
       }
     ]
   }
