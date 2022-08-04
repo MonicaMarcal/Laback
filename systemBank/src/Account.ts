@@ -15,4 +15,8 @@ export class Account {
   getBirthDate = () => this.birthDate
   getBalance = () => this.balance
   getTransactions = () => this.transactions
+
+  addTransaction(transaction: Transaction): void{
+    this.transactions.push(transaction)
+  }
 }

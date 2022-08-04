@@ -1,6 +1,7 @@
 import { Account } from "./Account";
 import { JSONFileManager } from "./JSONFileManager";
 import * as moment from "moment"
+import { Transaction } from "./Transaction";
 
 export class Bank{
   private fileManager: JSONFileManager = new JSONFileManager() //classe que lê e escreve arquivos json 
@@ -28,7 +29,7 @@ export class Bank{
     //validação: (cpf um por conta)se meu duplicateAccount existir, se não for undefind
     if(duplicateAccount){
       throw new Error("CPF informado já possui uma conta cadastrada!") //Error é uma classe nativa do typescript
-      }
+    }
 
       //VALIDANDO IDADE:pegando o ano de nascimento do usuario e subtraindo pelo ano atual
       const birthDateAsObject = moment(birthDate, "DD/MM/YYYY")
@@ -42,5 +43,37 @@ export class Bank{
         new Account(name, cpf, birthDate)
       )
       this.fileManager.writeToDatabase(this.accounts) //salvando no banco de dados
+      }
+
+      // Validando se tem alguem com o cpf e nome informado pelo usuario
+      getBalance(name: string, cpf: string):number{
+        const userAccount: Account | undefined = this.accounts.find( 
+          (account) => {return account.getCpf() === cpf && account.getName() === name}  //VALIDANDO CPF E NAME
+          )
+          if (userAccount){
+            return userAccount.getBalance()
+          }else{
+            throw new Error("Usuario não encontrado!")
+          }
+      }
+      addBalance(name: string, cpf: string, value: number): void{
+        const date: string = moment().format("DD/MM/YYYY")
+        const description: string = "Deposito de dinheiro"
+
+        this.accounts.forEach( 
+          (account) => {
+              if(account.getCpf() === cpf && account.getName() === name ){
+                account.addTransaction(
+                  new Transaction(
+                    value,
+                    description,
+                    date
+                  )
+                )
+            }
+          }  
+        )
+        this.fileManager.writeToDatabase(this.accounts) //salvando no banco de dados json
+      }
     }
-  }
+  
