@@ -25,36 +25,43 @@ ________________________________________________________________________________
 
 ```sql
 CREATE TABLE to_do_list_users(
-  id VARCHAR(64) PRIMARY KEY,
-  name VARCHAR(64) NOT NULL,
-  nickname VARCHAR(64) NOT NULL,
-  email VARCHAR(64) NOT NULL
+id VARCHAR(64) PRIMARY KEY,
+name VARCHAR(64) NOT NULL,
+nickname VARCHAR(64) NOT NULL,
+email VARCHAR(64) NOT NULL
 )
 
 ```
 
 ```sql
 CREATE TABLE to_do_list_tasks(
-  id VARCHAR(64) PRIMARY KEY,
-  title VARCHAR(64) NOT NULL,
-  description VARCHAR(1024) DEFAULT "No description provided",
-  deadline DATE,
-  status ENUM ("TO_DO", "DOING", "DONE") DEFAULT "TO_DO",
-  author_id VARCHAR(64),
-  FOREIGN KEY (author_id) REFERENCES to_do_list_users(id)
+id VARCHAR(64) PRIMARY KEY,
+title VARCHAR(64) NOT NULL,
+description VARCHAR(1024) DEFAULT "No description provided",
+deadline DATE,
+status ENUM ("TO_DO", "DOING", "DONE") DEFAULT "TO_DO",
+author_id VARCHAR(64),
+FOREIGN KEY (author_id) REFERENCES to_do_list_users(id)
 )
 
 ```
 
 ```sql
 CREATE TABLE to_do_list_assignees(
-  task_id VARCHAR(64),
-  assignee_id VARCHAR(64),
-  PRIMARY KEY (task_id, assignee_id),
-  FOREIGN KEY (task_id) REFERENCES to_do_list_tasks(id)
-  FOREIGN KEY (assignee_id) REFERENCES to_do_list_users(id)
+task_id VARCHAR(64),
+assignee_id VARCHAR(64),
+PRIMARY KEY (task_id, assignee_id),
+FOREIGN KEY (task_id) REFERENCES to_do_list_tasks(id)
+FOREIGN KEY (assignee_id) REFERENCES to_do_list_users(id)
 )
 
+```
+
+|JUNÇÃO DAS TABELAS|  
+```sql
+SELECT tasks.*, users.nickname FROM to_do_list_tasks AS tasks 
+JOIN to_do_list_users AS users
+ON author_id = users.id;
 ```
 ________________________________________________________________________________
 | ENDPOINTS |
@@ -78,9 +85,9 @@ ________________________________________________________________________________
     - METODO: POST
     - PATH: /USER/EDIT/:ID
     - BODY:
-        - NAME(OPCIONAL, NÃO PODE SER VAZIO)
-        - NICKENAME(OPCIONAL, NÃO PODE SER VAZIO)
-        - EMAIL(OPCIONAL, NÃO PODE SER VAZIO)
+        - NAME(OPCIONAL, MAS NÃO PODE SER VAZIO)
+        - NICKNAME(OPCIONAL, MAS NÃO PODE SER VAZIO)
+        - EMAIL(OPCIONAL, MAS NÃO PODE SER VAZIO)
         
 - CRIAR TAREFA
     - METODO: PUT
@@ -103,36 +110,35 @@ ________________________________________________________________________________
         - AUTHORID
         - AUTHORNICKNAME
 ________________________________________________________________________________
-## Tech
-Dillinger uses a number of open source projects to work properly:
+## Tecnologias
 
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework
+- [Typescript] 
+- [Express] 
+- [Knex]
+- [MySQL Workbench]
+- [Postman]
 
 
-## Installation
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
-Install the dependencies and devDependencies and start the server.
-
+## Instalação
 ```sh
-cd dillinger
-npm i
-node app
+git clone https://github.com/MonicaMarcal/Laback.git
+cd Laback 
+cd todolist
+npm install
+
 ```
 
-For production environments...
-
+## Configurações
 ```sh
-npm install --production
-NODE_ENV=production node app
+- Precisa criar as tabelas no mysql e criar os endpoints no postman
+
+- Criar um arquivo de configuração .env com seus dados do banco:
+DB_HOST = endereço_do_seu_banco
+DB_USER = Usuario_do_seu_banco
+DB_PASSWORD = Senha_do_seu_banco
+DB_SCHEMA = nome_do_seu_banco
+
 ```
 
 
-Verify the deployment by navigating to your server address in
-your preferred browser.
 
-```sh
-127.0.0.1:8000
-```
-
-**Free Software, Hell Yeah!**

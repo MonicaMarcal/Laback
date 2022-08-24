@@ -13,3 +13,4 @@ export default async function insertUser(
     email
   }).into('to_do_list_users')//pegando esses dados da tabela to_do_list_users
 }
+
