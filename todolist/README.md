@@ -79,7 +79,7 @@ ________________________________________________________________________________
     - PATH: /USER/:ID
     - BODY DE RESPOSTA: (RETORNAR UM ERRO SE NÃO ENCONTRAR)
         - ID
-        - NICKENAME
+        - NICKNAME
         
 - EDITAR USUARIO
     - METODO: POST
@@ -130,9 +130,11 @@ npm install
 
 ## Configurações
 ```sh
-- Precisa criar as tabelas no mysql e criar os endpoints no postman
+Criar as tabelas no mysql
 
-- Criar um arquivo de configuração .env com seus dados do banco:
+Criar os endpoints no postman
+
+Criar um arquivo de configuração .env com seus dados do banco:
 DB_HOST = endereço_do_seu_banco
 DB_USER = Usuario_do_seu_banco
 DB_PASSWORD = Senha_do_seu_banco
