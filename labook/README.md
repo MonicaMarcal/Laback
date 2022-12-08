@@ -30,7 +30,7 @@ DB_SCHEMA = nome_do_seu_banco
 
 BCRYPT_COST = 12 ;
 JWT_KEY = colocar_uma_senha_aleatoria ;
-JWT_EXPIRES_IN = "colocar_a_experiação_da_autenticação_pode_ser_horas_dias_meses_Etc"
+JWT_EXPIRES_IN = "colocar_uma_expiração"
  
 ```
 * Executar tabelas no Mysql Workbench
