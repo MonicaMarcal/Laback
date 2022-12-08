@@ -1,0 +1,36 @@
+POST http://localhost:3003/user/signup
+Content-Type: application/json
+
+{
+  "name": "Beatriz",
+  "email":"beatriz@gmail.com",
+  "password":"123"
+}
+
+###
+# @name login
+POST http://localhost:3003/user/login 
+Content-Type: application/json
+
+{
+  "email":"beatriz@gmail.com",
+  "password":"123"
+}
+
+###
+POST http://localhost:3003/post/
+Content-Type: application/json
+Authorization: {{login.response.body.token}}
+
+{
+  "photo":"https://i.picsum.photos/id/238/200/200.jpg?hmac=O4Jc6lqHVfaKVzLf8bWssNTbWzQoaRUC0TDXod9xDdM",
+  "description":"My city is beautiful =D",
+  "type":"normal"
+}
+
+###
+GET http://localhost:3003/post/f44c77f9-32df-4bd8-8646-d90fb41d5b99
+Authorization: {{login.response.body.token}}
+
+
+
