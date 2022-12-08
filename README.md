@@ -1,3 +1,3 @@
 # Laback
-Course Backend
+Course Backend - projects
 
